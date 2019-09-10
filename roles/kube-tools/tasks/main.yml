@@ -29,22 +29,6 @@
     echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
 #  when: ansible_distribution == "Debian"
 
-- name: Install prerequiste packages
-  apt:
-    state=latest
-    name={{ item }}
-  with_items:
-    - apt-transport-https
-
-- name: Install prerequiste packages
-  apt:
-    update_cache=yes
-    state=latest
-    name={{ item }}
-  with_items:
-    - cifs-utils
-    - dirmngr
-
 - name: Install kubernetes tools for Ubuntu server
   apt: name={{ item }} update_cache=yes
   with_items:

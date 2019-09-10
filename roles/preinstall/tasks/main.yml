@@ -13,6 +13,22 @@
   - socat
   when: ansible_distribution == "CentOS"
 
+- name: Install apt-transport-https packages
+  apt:
+    state=latest
+    name={{ item }}
+  with_items:
+    - apt-transport-https
+
+- name: Install prerequiste packages
+  apt:
+    update_cache=yes
+    state=latest
+    name={{ item }}
+  with_items:
+    - cifs-utils
+    - dirmngr
+
 - name: Disable firewalld on Centos server
   service: name=firewalld state=stopped enabled=no
   when: ansible_distribution == "CentOS"
