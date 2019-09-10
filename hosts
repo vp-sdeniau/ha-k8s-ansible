@@ -11,9 +11,9 @@
 172.17.0.235 l-dev-k8s-05.groupe-vecteurplus.com=node02
 
 [lb-etcd]
-172.17.0.231 if="eth0" lb_role=master priority=100 node_name=master01 
-172.17.0.232 if="eth0" lb_role=backup priority=90 node_name=master02
-172.17.0.233 if="eth0" lb_role=backup priority=80 node_name=master03
+172.17.0.231 if="eth0" lb_role="master" priority="100" node_name="master01"
+172.17.0.232 if="eth0" lb_role="backup" priority="90" node_name="master02"
+172.17.0.233 if="eth0" lb_role="backup" priority="80" node_name="master03"
 
 
 [all:vars]
