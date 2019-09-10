@@ -52,11 +52,11 @@ etcd_ca_dir="/etc/kubernetes/pki/etcd"
 docker_version="v17.03.2-ce"
 
 # etc version
-etcd_version="v3.3.4"
+etcd_version="v3.3.7"
 
 # Kubernetes version
-k8s_version_ubuntu="1.10.13-00"
-k8s_version_centos="1.10.0-0"
+k8s_version_ubuntu="1.11.10-00"
+k8s_version_centos="1.11.10-00"
 
 # Helm version
 helm_version="v2.9.1"
