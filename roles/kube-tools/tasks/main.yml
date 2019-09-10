@@ -22,12 +22,12 @@
   apt_key:
     url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
     state: present
-  when: ansible_distribution == "Debian"
+#  when: ansible_distribution == "Debian"
 
 - name: Add kubernetes source list
   shell: >
     echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
-  when: ansible_distribution == "Debian"
+#  when: ansible_distribution == "Debian"
 
 - name: Install kubernetes tools for Ubuntu server
   apt: name={{ item }} update_cache=yes
@@ -35,4 +35,4 @@
   - kubelet={{ k8s_version_ubuntu }}
   - kubectl={{ k8s_version_ubuntu }}
   - kubeadm={{ k8s_version_ubuntu }}
-  when: ansible_distribution == "Debian"
+#  when: ansible_distribution == "Debian"

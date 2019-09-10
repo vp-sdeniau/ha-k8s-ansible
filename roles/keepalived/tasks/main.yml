@@ -8,7 +8,7 @@
   apt: name={{ item }} state=latest
   with_items:
   - keepalived
-  when: ansible_distribution == "Debian"
+#  when: ansible_distribution == "Debian"
 
 
 - name: Modify keepalived.conf
