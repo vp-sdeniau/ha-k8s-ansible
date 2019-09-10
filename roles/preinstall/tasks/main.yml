@@ -1,5 +1,5 @@
 - name: Set hostname
-  shell: hostname {{node_name}} && echo {{ node_name }} > /etc/hostname
+  shell: hostname {{ node_name }} && echo {{ node_name }} > /etc/hostname
 
 - name: Install socat for Ubuntu server
   apt: name={{ item }} state=latest
