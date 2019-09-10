@@ -1,0 +1,23 @@
+- name: Copy certificates pki folder from frist master 
+  copy: src={{ kube_cert_dir }} dest={{ kube_config_dir }}/
+ 
+- name: Create kubeadm config file
+  template: src=kubeadm-config.yaml.j2 dest={{ kube_config_dir }}/kubeadm-config.yaml  
+
+- name: Init current kube master
+  command: timeout -k 300s 300s kubeadm init --config {{ kube_config_dir }}/kubeadm-config.yaml --ignore-preflight-errors=all
+  register: kubeadm_init
+  retries: 3
+  failed_when: kubeadm_init.rc != 0 and "field is immutable" not in kubeadm_init.stderr
+
+- name: Create kubectl config folder
+  file: name=/root/.kube state=directory
+
+- name: Copy kubectl config
+  shell: cp {{ kube_config_dir }}/admin.conf /root/.kube/config
+
+- name: Set up service point VIP for Kubernetes API server
+  shell: sed -i 's/{{ inventory_hostname }}/{{ keepalived_vip }}/' /root/.kube/config
+
+
+

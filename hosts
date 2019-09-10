@@ -1,0 +1,74 @@
+# Kubernetes nodes
+[first-master]
+172.17.0.231 l-dev-k8s-01.groupe-vecteurplus.com=master01
+
+[other-master]
+172.17.0.232 l-dev-k8s-02.groupe-vecteurplus.com=master02
+172.17.0.233 l-dev-k8s-03.groupe-vecteurplus.com=master03
+
+[kube-node]
+172.17.0.234 l-dev-k8s-04.groupe-vecteurplus.com=node01
+172.17.0.235 l-dev-k8s-05.groupe-vecteurplus.com=node02
+
+[lb-etcd]
+172.17.0.231 if="eth0" lb_role=master priority=100 node_name=master01 
+172.17.0.232 if="eth0" lb_role=backup priority=90 node_name=master02
+172.17.0.233 if="eth0" lb_role=backup priority=80 node_name=master03
+
+
+[all:vars]
+master01="172.17.0.231"
+master02="172.17.0.232"
+master03="172.17.0.233"
+
+#Kubernetes API Server
+keepalived_vip="172.17.0.236"
+
+kube-apiserver="https://{{ keepalived_vip }}:6443"
+
+# etcd nodes
+tmp_nodes="{% for h in groups['lb-etcd'] %}{{ hostvars[h]['node_name'] }}=https://{{ h }}:2380,{% endfor %}"
+etcd_nodes="{{ tmp_nodes.rstrip(',') }}"
+
+# etcd endpoints
+tem_endpoints="{% for h in groups['lb-etcd'] %}https://{{ h }}:2379,{% endfor %}"
+etcd_endpoints="{{ tem_endpoints.rstrip(',') }}"
+
+# Network plugin (calico or flannel)
+network_plugin="flannel"
+
+# pod network
+pod_network="10.244.0.0/16"
+
+bin_dir="/usr/local/bin"
+
+# Ansible working directory
+base_dir="/etc/ansible"
+
+# The etcd certificates directory on kubernetes master nodes
+etcd_ca_dir="/etc/kubernetes/pki/etcd"
+
+# Docker version
+docker_version="v17.03.2-ce"
+
+# etc version
+etcd_version="v3.3.4"
+
+# Kubernetes version
+k8s_version_ubuntu="1.10.0-00"
+k8s_version_centos="1.10.0-0"
+
+# Helm version
+helm_version="v2.9.1"
+
+# The certificates directory on frist master node
+cert_generate_dir="/opt/ssl"
+
+# Kubernetes apps yaml directory
+yaml_dir="/root/.kube/kube-apps"
+
+# Kubernetes certificates directory
+kube_cert_dir="/etc/kubernetes/pki"
+
+# Kubernetes config path
+kube_config_dir="/etc/kubernetes"

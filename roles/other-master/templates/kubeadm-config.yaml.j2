@@ -1,0 +1,21 @@
+apiVersion: kubeadm.k8s.io/v1alpha1
+kind: MasterConfiguration
+api:
+  advertiseAddress: {{ inventory_hostname }}
+etcd:
+  endpoints:
+  - https://{{ master01 }}:2379
+  - https://{{ master02 }}:2379
+  - https://{{ master03 }}:2379
+  caFile: {{ etcd_ca_dir }}/ca.pem
+  certFile: {{ etcd_ca_dir }}/etcd.pem
+  keyFile: {{ etcd_ca_dir }}/etcd-key.pem
+networking:
+  podSubnet: {{ pod_network }}
+apiServerCertSANs:
+- {{ keepalived_vip }}
+- {{ master01 }}
+- {{ master02 }}
+- {{ master03 }}
+apiServerExtraArgs:
+  endpoint-reconciler-type: lease

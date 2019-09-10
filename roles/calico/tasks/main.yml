@@ -1,0 +1,10 @@
+- name: Create yaml folder
+  file: name={{ yaml_dir }} state=directory
+
+- name: Get calico yaml file
+  template: src=calico.yaml.j2 dest={{ yaml_dir }}/calico.yaml
+
+- name: Create a calico POD network
+  raw: kubectl get po -n kube-system|grep calico || kubectl create -f {{ yaml_dir }}/calico.yaml
+
+
