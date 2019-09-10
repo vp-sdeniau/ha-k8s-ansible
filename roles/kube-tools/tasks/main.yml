@@ -31,13 +31,19 @@
 
 - name: Install prerequiste packages
   apt:
+    state=latest
+    name={{ item }}
+  with_items:
+    - apt-transport-https
+
+- name: Install prerequiste packages
+  apt:
     update_cache=yes
     state=latest
     name={{ item }}
   with_items:
     - cifs-utils
     - dirmngr
-    - apt-transport-https
 
 - name: Install kubernetes tools for Ubuntu server
   apt: name={{ item }} update_cache=yes
