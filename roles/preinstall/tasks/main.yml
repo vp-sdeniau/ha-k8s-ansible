@@ -5,8 +5,8 @@
   apt: name={{ item }} state=latest
   with_items:
   - socat
-  when: ansible_distribution == "Ubuntu"
-     
+  when: ansible_distribution == "Debian"
+
 - name: Install socat for Centos server
   yum: name={{ item }} state=latest
   with_items:
@@ -17,7 +17,7 @@
   service: name=firewalld state=stopped enabled=no
   when: ansible_distribution == "CentOS"
 
-- name: Flush iptables 
+- name: Flush iptables
   shell: iptables -P FORWARD ACCEPT
 
 - name: Disable swap
@@ -31,13 +31,13 @@
     backup: 'yes'
 
 - name: Set hosts
-  template: src=hosts.j2 dest=/etc/hosts 
+  template: src=hosts.j2 dest=/etc/hosts
 
 - name: Disable selinux on Centos server temporarily
   shell: "setenforce 0"
   when: ansible_distribution == "CentOS"
 
-- name: Disable selinux on Centos server 
+- name: Disable selinux on Centos server
   lineinfile:
     dest: /etc/selinux/config
     regexp: "^SELINUX="
@@ -51,7 +51,7 @@
 - name: Enable br_netfilter module
   modprobe: name=br_netfilter state=present
   ignore_errors: true
-  
+
 - name: Reload sysctl config
   shell: "sysctl -p /etc/sysctl.d/k8s-sysctl.conf"
   ignore_errors: true
