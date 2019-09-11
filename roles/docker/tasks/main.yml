@@ -1,14 +1,22 @@
-- name: Copy docker executables 
-  copy: src={{ base_dir }}/bin/docker/{{ docker_version }}/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
-  with_items:
-  - docker-containerd
-  - docker-containerd-shim
-  - docker-init
-  - docker-runc
-  - docker
-  - docker-containerd-ctr
-  - dockerd
-  - docker-proxy
+- name: Install aptitude using apt
+  apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+
+- name: Install required system packages
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'gnupg2' ]
+
+- name: Add Docker GPG apt Key
+  apt_key:
+     url: https://download.docker.com/linux/debian/gpg
+     state: present
+
+- name: Add Docker Repository
+  apt_repository:
+     repo: deb https://download.docker.com/linux/debian stretch stable
+     state: present
+
+- name: Update apt and install docker-ce
+  apt: update_cache=yes name=docker-ce state=latest
 
 - name: Copy docker command
   copy: src=docker dest=/etc/bash_completion.d/docker mode=0644
@@ -24,4 +32,3 @@
 
 - name: Start docker service
   shell: systemctl daemon-reload && systemctl enable docker && systemctl restart docker
-
