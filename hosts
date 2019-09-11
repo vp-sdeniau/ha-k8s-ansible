@@ -54,7 +54,7 @@ docker_version="v17.03.2-ce"
 etcd_version="v3.3.4"
 
 # Kubernetes version
-k8s_version_ubuntu="1.11.10-00"
+k8s_version_ubuntu="1.15.3-00"
 k8s_version_centos="1.11.10-00"
 
 # Helm version
