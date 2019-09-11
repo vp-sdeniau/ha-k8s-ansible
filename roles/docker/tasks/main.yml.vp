@@ -12,15 +12,34 @@
 
 - name: Add Docker Repository
   apt_repository:
-    repo: deb https://download.docker.com/linux/debian stretch stable
+     repo: deb https://download.docker.com/linux/debian stretch stable
+     state: present
+
+- name: Install docker-ce
+  apt:
+    name: docker-ce=5:18.09.9~3-0~debian-stretch
+    state: present
+    update_cache: yes
+
+- name: Desinstall docker-ce-cli
+  apt:
+    name: docker-ce-cli
+    state: absent
+
+- name: Install docker-ce-cli
+  apt:
+    name: docker-ce-cli=5:18.09.9~3-0~debian-stretch
     state: present
 
-- name: Install Docker
-  apt: name={{ item }} state=latest
-  with_items:
-    - docker-ce
-    - containerd.io
-    - docker-compose
+- name: Install container.io
+  apt:
+    name: containerd.io
+    state: absent
+
+- name: Install container.io
+  apt:
+    name: containerd.io=1.2.5-1
+    state: present
 
 - name: Copy docker command
   copy: src=docker dest=/etc/bash_completion.d/docker mode=0644
