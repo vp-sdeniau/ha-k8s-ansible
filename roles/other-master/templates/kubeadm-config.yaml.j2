@@ -1,6 +1,7 @@
-apiVersion: kubeadm.k8s.io/v1beta2
-kind: ClusterConfiguration
-controlPlaneEndpoint: {{ keepalived_vip }}
+apiVersion: kubeadm.k8s.io/v1alpha3
+kind: MasterConfiguration
+api:
+  advertiseAddress: {{ inventory_hostname }}
 etcd:
   endpoints:
   - https://{{ master01 }}:2379

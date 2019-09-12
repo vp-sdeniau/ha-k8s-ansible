@@ -48,13 +48,13 @@ base_dir="/etc/ansible"
 etcd_ca_dir="/etc/kubernetes/pki/etcd"
 
 # Docker version
-docker_version="v17.03.2-ce"
+docker_version="v19.03.2-ce"
 
 # etc version
 etcd_version="v3.4.0"
 
 # Kubernetes version
-k8s_version_ubuntu="1.15.3-00"
+k8s_version_ubuntu="1.12.10-00"
 k8s_version_centos="1.11.10-00"
 
 # Helm version
