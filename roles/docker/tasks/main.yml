@@ -15,12 +15,12 @@
     repo: deb https://download.docker.com/linux/debian stretch stable
     state: present
 
-- name: Install Docker
-  apt: name={{ item }} state=latest
-  with_items:
-    - docker-ce=5:18.09.9~3-0~debian-stretch
-    - containerd.io
-    - docker-compose
+- name: Install Docker-ce
+  apt: name= docker-ce=5:18.09.9~3-0~debian-stretch state=present
+
+- name: Install containerd.io & docker-compose
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: [ 'containerd.io', 'docker-compose' ]
 
 - name: Create docker systemd unit file
   template: src=daemon.json.j2 dest=/etc/docker/daemon.json
